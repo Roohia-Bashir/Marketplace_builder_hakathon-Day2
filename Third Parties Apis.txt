@@ -1,0 +1,4 @@
+					Third Parties Apis	
+Database schema (Sanity CMS)
+Shipment (ShipEngine)
+Payment (Stripe)

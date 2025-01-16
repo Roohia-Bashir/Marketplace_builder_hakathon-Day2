@@ -1,0 +1,19 @@
+						Order Follow:
+
+Cart Page:
+The user reviews their cart and clicks "Proceed to Checkout."
+An order is created in the database with:
+Cart items
+User details (if available)
+An initial status, e.g., pending or draft.
+
+
+
+Checkout Page:
+The user enters their shipping, billing, and other details.
+The order in the database is updated with the entered details.
+
+
+
+Payment Page:
+After completing the payment, the order status is updated to completed or paid.

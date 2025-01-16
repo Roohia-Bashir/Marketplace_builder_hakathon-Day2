@@ -1,0 +1,320 @@
+						1. Product Schema
+export default {
+  name: 'product',
+  type: 'document',
+  title: 'Product',
+  fields: [
+    {
+      name: 'name',
+      type: 'string',
+      title: 'Product Name',
+    },
+    {
+      name: 'slug',
+      type: 'slug',
+      title: 'Slug',
+      options: {
+        source: 'name',
+        maxLength: 96,
+      },
+    },
+    {
+      name: 'price',
+      type: 'number',
+      title: 'Price',
+    },
+    {
+      name: 'description',
+      type: 'text',
+      title: 'Description',
+    },
+    {
+      name: 'image',
+      type: 'image',
+      title: 'Product Image',
+      options: {
+        hotspot: true,
+      },
+    },
+    {
+      name: 'category',
+      type: 'reference',
+      to: [{ type: 'category' }],
+      title: 'Category',
+    },
+    {
+      name: 'stock',
+      type: 'number',
+      title: 'Stock Quantity',
+    },
+    {
+      name: 'tags',
+      type: 'array',
+      title: 'Tags',
+      of: [{ type: 'string' }],
+    },
+  ],
+};
+
+
+
+
+
+
+
+
+
+
+						2. Category Schema
+export default {
+  name: 'category',
+  type: 'document',
+  title: 'Category',
+  fields: [
+    {
+      name: 'title',
+      type: 'string',
+      title: 'Category Title',
+    },
+    {
+      name: 'description',
+      type: 'text',
+      title: 'Description',
+    },
+  ],
+};
+
+
+
+
+
+
+
+						3. User Schema
+export default {
+  name: 'user',
+  type: 'document',
+  title: 'User',
+  fields: [
+    {
+      name: 'name',
+      type: 'string',
+      title: 'Name',
+    },
+    {
+      name: 'email',
+      type: 'string',
+      title: 'Email',
+    },
+    {
+      name: 'password',
+      type: 'string',
+      title: 'Password',
+    },
+    {
+      name: 'address',
+      type: 'string',
+      title: 'Address',
+    },
+    {
+      name: 'phone',
+      type: 'string',
+      title: 'Phone Number',
+    },
+  ],
+};
+
+
+
+
+
+
+
+
+						4. Cart Schema
+export default {
+  name: 'cart',
+  type: 'document',
+  title: 'Cart',
+  fields: [
+    {
+      name: 'user',
+      type: 'reference',
+      to: [{ type: 'user' }],
+      title: 'User',
+    },
+    {
+      name: 'products',
+      type: 'array',
+      title: 'Products',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'product', type: 'reference', to: [{ type: 'product' }], title: 'Product' },
+            { name: 'quantity', type: 'number', title: 'Quantity' },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+
+
+
+
+						5. Order Schema
+export default {
+  name: 'order',
+  type: 'document',
+  title: 'Order',
+  fields: [
+    {
+      name: 'user',
+      type: 'reference',
+      to: [{ type: 'user' }],
+      title: 'User',
+    },
+    {
+      name: 'products',
+      type: 'array',
+      title: 'Products',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'product', type: 'reference', to: [{ type: 'product' }], title: 'Product' },
+            { name: 'quantity', type: 'number', title: 'Quantity' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'totalAmount',
+      type: 'number',
+      title: 'Total Amount',
+    },
+    {
+      name: 'status',
+      type: 'string',
+      title: 'Order Status',
+      options: {
+        list: [
+          { title: 'Pending', value: 'pending' },
+          { title: 'Shipped', value: 'shipped' },
+          { title: 'Delivered', value: 'delivered' },
+        ],
+      },
+    },
+    {
+      name: 'paymentMethod',
+      type: 'string',
+      title: 'Payment Method',
+    },
+    {
+      name: 'createdAt',
+      type: 'datetime',
+      title: 'Order Date',
+    },
+  ],
+};
+
+
+
+
+
+
+
+						6. Payment Schema
+export default {
+  name: 'payment',
+  type: 'document',
+  title: 'Payment',
+  fields: [
+    {
+      name: 'user',
+      type: 'reference',
+      to: [{ type: 'user' }],
+      title: 'User',
+    },
+    {
+      name: 'order',
+      type: 'reference',
+      to: [{ type: 'order' }],
+      title: 'Order',
+    },
+    {
+      name: 'amount',
+      type: 'number',
+      title: 'Amount',
+    },
+    {
+      name: 'paymentMethod',
+      type: 'string',
+      title: 'Payment Method',
+    },
+    {
+      name: 'status',
+      type: 'string',
+      title: 'Payment Status',
+      options: {
+        list: [
+          { title: 'Pending', value: 'pending' },
+          { title: 'Completed', value: 'completed' },
+        ],
+      },
+    },
+    {
+      name: 'transactionId',
+      type: 'string',
+      title: 'Transaction ID',
+    },
+  ],
+};
+
+
+
+
+
+						7. Shipment Schema
+export default {
+  name: 'shipment',
+  type: 'document',
+  title: 'Shipment',
+  fields: [
+    {
+      name: 'order',
+      type: 'reference',
+      to: [{ type: 'order' }],
+      title: 'Order',
+    },
+    {
+      name: 'trackingNumber',
+      type: 'string',
+      title: 'Tracking Number',
+    },
+    {
+      name: 'status',
+      type: 'string',
+      title: 'Shipment Status',
+      options: {
+        list: [
+          { title: 'Preparing', value: 'preparing' },
+          { title: 'Shipped', value: 'shipped' },
+          { title: 'Delivered', value: 'delivered' },
+        ],
+      },
+    },
+    {
+      name: 'deliveryDate',
+      type: 'datetime',
+      title: 'Estimated Delivery Date',
+    },
+  ],
+};
+
+
+
+
+
